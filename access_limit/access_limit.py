@@ -64,7 +64,7 @@ class SimpleSwitch13(app_manager.RyuApp):
 
     @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
     def _packet_in_handler(self, ev):
-        print "packet_in/............"
+        print("packet_in/............")
         # If you hit this you might want to increase
         # the "miss_send_length" of your switch
         if ev.msg.msg_len < ev.msg.total_len:
@@ -122,7 +122,7 @@ class SimpleSwitch13(app_manager.RyuApp):
             if(pkt_ipv4.proto == inet.IPPROTO_TCP):
                 pkt_tcp = pkt.get_protocol(tcp.tcp)
                 if 80 == pkt_tcp.dst_port:
-                    print " tcp dst_prot~~~~~~~~~~~~~", pkt_tcp.dst_port
+                    print(" tcp dst_prot~~~~~~~~~~~~~", pkt_tcp.dst_port)
                     if (pkt_ipv4.src, pkt_ipv4.dst, pkt_tcp.dst_port) not in self.limit.keys():
                         self.limit[
                             (pkt_ipv4.src, pkt_ipv4.dst, pkt_tcp.dst_port)] = True
@@ -150,4 +150,4 @@ class SimpleSwitch13(app_manager.RyuApp):
             eth_type=ether.ETH_TYPE_IP, ipv4_src=ipv4_dst, ipv4_dst=ipv4_src, ip_proto=inet.IPPROTO_TCP, tcp_src=src_port)
         self.add_flow(datapath, 10, match, actions,
                       idle_timeout=60, hard_timeout=60)
-        print "add drop flow ~~~~~~~~"
+        print("add drop flow ~~~~~~~~")

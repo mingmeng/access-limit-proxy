@@ -49,7 +49,7 @@ class ProxyAccess(app_manager.RyuApp):
     @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
     def switch_features_handler(self, ev):
         datapath = ev.msg.datapath
-        print "successfully connect switch(dpid:%d)" % (datapath.id)
+        print("successfully connect switch(dpid:%d)" % (datapath.id))
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
         self.dps.append(datapath)
@@ -107,8 +107,8 @@ class ProxyAccess(app_manager.RyuApp):
         actions = []
         self.add_flow(
             self.web_server_dp, 5, match, actions=actions, table_id=0)
-        print "install flow-entry: prevent host derectly visit web_proxy(%s) \
-        on switch %s" % (web_proxy, self.web_server_dp.id)
+        print("install flow-entry: prevent host derectly visit web_proxy(%s) \
+        on switch %s" % (web_proxy, self.web_server_dp.id))
 
         hub.sleep(20)
         # install rederict flow-enty that flow src_ip is host_proxy
@@ -157,7 +157,7 @@ class ProxyAccess(app_manager.RyuApp):
                                                                data=pkt.data
                                                                )
             datapath.send_msg(arp_request)
-        print "send detect_arp request:i am %s,who is %s" % (detect_ip, ip_addr)
+        print("send detect_arp request:i am %s,who is %s" % (detect_ip, ip_addr))
 
     # recieve detect_arp reply to acquire host_proxy web_server
     # and web_proxy mac and datapath directly connecting the web_server
@@ -165,11 +165,11 @@ class ProxyAccess(app_manager.RyuApp):
         if (arp.opcode == 2) and (eth.dst == detect_mac):
             for ip_addr in self.ip_to_mac.keys():
                 if arp.src_ip == ip_addr:
-                    print "detect_arp reply:i am %s,my mac is %s" % (ip_addr, eth.src)
+                    print("detect_arp reply:i am %s,my mac is %s" % (ip_addr, eth.src))
                     self.ip_to_mac[ip_addr] = eth.src
                     if arp.src_ip == web_server:
                         self.web_server_dp = datapath
-                        print "i am web_server,ip is %s, derectly connect switch(dpid:%s)" % (web_server, datapath.id)
+                        print("i am web_server,ip is %s, derectly connect switch(dpid:%s)" % (web_server, datapath.id))
 
     @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
     def _packet_in_handler(self, ev):

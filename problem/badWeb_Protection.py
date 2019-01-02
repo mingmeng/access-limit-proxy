@@ -97,14 +97,14 @@ class SimpleSwitch13(app_manager.RyuApp):
             if(pkt_ipv4.proto == inet.IPPROTO_UDP):
                 pkt_udp = pkt.get_protocol(udp.udp)
                 if 53 == pkt_udp.dst_port:
-                    print " DNS request:dst_prot", pkt_udp.dst_port
+                    print(" DNS request:dst_prot", pkt_udp.dst_port)
                     self._badWeb_Potect(datapath, msg)
         else:
             self._forwarding(datapath, msg)
 
     # bad web  judge and protection
     def _badWeb_Potect(self, datapath, msg):
-        print "in _badWeb_Potect"
+        print("in _badWeb_Potect")
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
         pkt = packet.Packet(msg.data)
@@ -135,17 +135,17 @@ class SimpleSwitch13(app_manager.RyuApp):
             cur = conn.cursor()
             select = 'select * from WEB_lacklist where name="%s"' % web_name
             if(cur.execute(select)):
-                print ' ilegal web  "%s", it`s dangerous! you  can`t to access it.' % web_name
+                print(' ilegal web  "%s", it`s dangerous! you  can`t to access it.' % web_name)
                 cur.close()
                 conn.close()
                 return
             else:
-                print 'legal web "%s",you can access it.' % web_name
+                print('legal web "%s",you can access it.' % web_name)
                 cur.close()
                 conn.close()
                 self._forwarding(datapath, msg)
-        except MySQLdb.Error, e:
-            print "Mysql Error %d: %s" % (e.args[0], e.args[1])
+        except MySQLdb.Error as e:
+            print("Mysql Error %d: %s" % (e.args[0], e.args[1]))
 
         # for web in WEB_lacklist:
         #     if web_name == web:
@@ -155,7 +155,7 @@ class SimpleSwitch13(app_manager.RyuApp):
         #     self._forwarding(datapath, msg)
 
     def _forwarding(self, datapath, msg):
-        print "in _forwarding..."
+        print("in _forwarding...")
         datapath = msg.datapath
         ofproto = datapath.ofproto
         parser = datapath.ofproto_parser
