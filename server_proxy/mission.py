@@ -44,6 +44,7 @@ class ProxyAccess(app_manager.RyuApp):
         self.mac_to_port = {}
         self.ip_to_mac = {}
         self.dps = []
+	self.limit={}
         self.web_server_dp = None
         hub.spawn(self._redirect)
 
