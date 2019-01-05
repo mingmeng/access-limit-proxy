@@ -128,8 +128,8 @@ class SimpleSwitch13(app_manager.RyuApp):
                             (pkt_ipv4.src, pkt_ipv4.dst, pkt_tcp.dst_port)] = True
                     if self.limit[(pkt_ipv4.src, pkt_ipv4.dst, pkt_tcp.dst_port)]:
                         # set FLASE , don`t "access deny" next time.
-                        self.limit[
-                            (pkt_ipv4.src, pkt_ipv4.dst, pkt_tcp.dst_port)] = False
+                        #self.limit[
+                        #    (pkt_ipv4.src, pkt_ipv4.dst, pkt_tcp.dst_port)] = False
                         # can` have value in monitor!!!
                         hub.spawn(self._monitor, datapath, pkt_ipv4, pkt_tcp)
 
