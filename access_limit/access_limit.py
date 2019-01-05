@@ -122,7 +122,7 @@ class SimpleSwitch13(app_manager.RyuApp):
             if(pkt_ipv4.proto == inet.IPPROTO_TCP):
                 pkt_tcp = pkt.get_protocol(tcp.tcp)
                 if 80 == pkt_tcp.dst_port:
-                    print(" tcp dst_prot~~~~~~~~~~~~~", pkt_tcp.dst_port)
+                    print(" tcp dst_prot~~~~~~~~~~~~~%d" %pkt_tcp.dst_port)
                     if (pkt_ipv4.src, pkt_ipv4.dst, pkt_tcp.dst_port) not in self.limit.keys():
                         self.limit[
                             (pkt_ipv4.src, pkt_ipv4.dst, pkt_tcp.dst_port)] = True
