@@ -44,7 +44,7 @@ class ProxyAccess(app_manager.RyuApp):
         self.mac_to_port = {}
         self.ip_to_mac = {}
         self.dps = []
-        self.limit={}       # 加上流表限制属性 用于存储
+        self.limit={}       # 加上流表限制属性 用于存储被ban机器
         self.web_server_dp = None
         hub.spawn(self._redirect)
 
@@ -86,7 +86,6 @@ class ProxyAccess(app_manager.RyuApp):
         self.ip_to_mac.setdefault(web_server)
         self.ip_to_mac.setdefault(web_proxy)
 
-        # detect mac of host_proxy web_server and web_proxy
         # 检测web服务器的mac地址和代理服务器的地址
         flag = False
         while not flag:
